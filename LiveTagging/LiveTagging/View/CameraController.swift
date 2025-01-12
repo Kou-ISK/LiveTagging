@@ -7,11 +7,13 @@
 
 import AVFoundation
 import SwiftUI
+import Photos
 
-class CameraController: ObservableObject {
+class CameraController: NSObject, ObservableObject {
     @Published var isRecording = false
-    var session: AVCaptureSession?
     @Published var previewLayer: AVCaptureVideoPreviewLayer?
+    var session: AVCaptureSession?
+    var movieOutput: AVCaptureMovieFileOutput?
 
     func startSession() {
         session = AVCaptureSession()
@@ -28,6 +30,14 @@ class CameraController: ObservableObject {
             return
         }
         session.addInput(videoDeviceInput)
+
+        movieOutput = AVCaptureMovieFileOutput()
+        if session.canAddOutput(movieOutput!) {
+            session.addOutput(movieOutput!)
+        } else {
+            print("ムービー出力を追加できません")
+            return
+        }
 
         previewLayer = AVCaptureVideoPreviewLayer(session: session)
         previewLayer?.videoGravity = .resizeAspectFill
@@ -56,12 +66,54 @@ class CameraController: ObservableObject {
     }
 
     func startRecording() {
-        // 録画開始の実装
+        guard let movieOutput = movieOutput else {
+            print("ムービー出力が設定されていません")
+            return
+        }
+        let timestamp = Int(Date().timeIntervalSince1970)
+        let outputPath = NSTemporaryDirectory() + "output_\(timestamp).mov"
+        let outputURL = URL(fileURLWithPath: outputPath)
+        print("録画開始: \(outputURL)")
+        movieOutput.startRecording(to: outputURL, recordingDelegate: self)
         isRecording = true
     }
 
     func stopRecording() {
-        // 録画停止の実装
+        guard let movieOutput = movieOutput else {
+            print("ムービー出力が設定されていません")
+            return
+        }
+        movieOutput.stopRecording()
         isRecording = false
+    }
+
+    private func saveVideoToPhotosLibrary(from sourceURL: URL) {
+        PHPhotoLibrary.requestAuthorization { status in
+            guard status == .authorized else {
+                print("写真ライブラリへのアクセスが許可されていません")
+                return
+            }
+
+            PHPhotoLibrary.shared().performChanges({
+                PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: sourceURL)
+            }) { success, error in
+                if let error = error {
+                    print("ビデオの保存に失敗しました: \(error.localizedDescription)")
+                } else {
+                    print("ビデオが写真ライブラリに保存されました")
+                }
+            }
+        }
+    }
+}
+
+extension CameraController: AVCaptureFileOutputRecordingDelegate {
+    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        if let error = error {
+            print("録画に失敗しました: \(error.localizedDescription)")
+        } else {
+            print("録画が完了しました: \(outputFileURL)")
+            saveVideoToPhotosLibrary(from: outputFileURL)
+        }
     }
 }

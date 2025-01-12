@@ -8,5 +8,7 @@
     <string>このアプリでは動画を撮影するためにマイクを使用します。</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>撮影した写真を保存するために写真ライブラリにアクセスします。</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>ビデオを写真ライブラリに保存するためのアクセス許可が必要です。</string>
 </dict>
 </plist>
