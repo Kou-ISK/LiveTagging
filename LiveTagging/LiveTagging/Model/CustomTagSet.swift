@@ -17,6 +17,6 @@ final class CustomTagSet{
     init(id: UUID, tagSetName: String, tags: [CustomTagItem]) {
         self.id = id
         self.tagSetName = tagSetName
-        self.tags = []
+        self.tags = tags
     }
 }

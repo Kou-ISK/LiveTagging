@@ -7,18 +7,17 @@
 
 import Foundation
 import SwiftData
+import AVFoundation
 
 @Model
 final class TimelineItem{
     var id: UUID
-    var timeStamp: TimeInterval
+    var timeStamp: Double
     var itemLabel: String
-    var videoItem: VideoItem // 逆参照
     
-    init(id: UUID, timeStamp: TimeInterval, itemLabel: String, videoItem: VideoItem) {
+    init(id: UUID, timeStamp: Double, itemLabel: String) {
         self.id = id
         self.timeStamp = timeStamp
         self.itemLabel = itemLabel
-        self.videoItem = videoItem
     }
 }

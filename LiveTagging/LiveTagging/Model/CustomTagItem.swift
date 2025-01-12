@@ -12,11 +12,9 @@ import SwiftData
 final class CustomTagItem{
     var id: UUID
     var itemLabel: String
-    var tagSet: CustomTagSet
     
-    init(id: UUID, timeStamp: TimeInterval, itemLabel: String, tagSet: CustomTagSet) {
+    init(id: UUID, itemLabel: String) {
         self.id = id
         self.itemLabel = itemLabel
-        self.tagSet = tagSet
     }
 }
