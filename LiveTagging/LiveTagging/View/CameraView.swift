@@ -31,6 +31,7 @@ struct LiveTaggingView: View {
                     if cameraController.isRecording {
                         // 録画終了
                         cameraController.stopRecording()
+                        videoItem.timeline.sort{$0.timeStamp < $1.timeStamp}
                         modelContext.insert(videoItem)
                     } else {
                         // 録画開始

@@ -12,14 +12,22 @@ struct TimelineView: View {
     var body: some View {
         // タイムライン
         ScrollView(.vertical){
-            ForEach(timeline, id:\.id){item in
-                HStack{
-                    Text(item.timeStamp.description)
-                    Text(item.itemLabel)
-                }.padding()
-                    .foregroundColor(.white)
+            VStack(alignment:.leading){
+                ForEach(timeline, id:\.id){item in
+                    HStack{
+                        Text(formatTime(item.timeStamp))
+                        Text(item.itemLabel)
+                    }.padding()
+                        .foregroundColor(.white)
+                }
             }
         }.background(.gray.opacity(0.6)).padding(16)
+    }
+    
+    private func formatTime(_ time: Double) -> String {
+        let minutes = Int(time) / 60
+        let seconds = Int(time) % 60
+        return String(format: "%02d:%02d", minutes, seconds)
     }
 }
 
