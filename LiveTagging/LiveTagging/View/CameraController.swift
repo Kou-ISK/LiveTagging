@@ -8,82 +8,60 @@
 import AVFoundation
 import SwiftUI
 
-// カメラキャプチャを管理するクラス
-class CameraController: NSObject, ObservableObject, AVCaptureFileOutputRecordingDelegate {
-    private var captureSession: AVCaptureSession?
-    private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
-    private var videoOutput: AVCaptureMovieFileOutput?
-    private var movieOutputURL: URL?
-    
+class CameraController: ObservableObject {
     @Published var isRecording = false
-    var previewLayer: AVCaptureVideoPreviewLayer? {
-        return videoPreviewLayer
-    }
+    var session: AVCaptureSession?
+    @Published var previewLayer: AVCaptureVideoPreviewLayer?
 
     func startSession() {
-        guard captureSession == nil else { return }
+        session = AVCaptureSession()
+        session?.sessionPreset = .high
 
-        // セッションの作成
-        captureSession = AVCaptureSession()
-
-        // デバイスの取得
-        guard let videoDevice = AVCaptureDevice.default(for: .video),
-              let videoDeviceInput = try? AVCaptureDeviceInput(device: videoDevice),
-              captureSession?.canAddInput(videoDeviceInput) == true else { return }
-        
-        captureSession?.addInput(videoDeviceInput)
-
-        // プレビュー用のレイヤー設定
-        videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
-        videoPreviewLayer?.videoGravity = .resizeAspectFill
-
-        // ビデオ出力の設定
-        videoOutput = AVCaptureMovieFileOutput()
-        if let videoOutput = videoOutput, captureSession?.canAddOutput(videoOutput) == true {
-            captureSession?.addOutput(videoOutput)
+        guard let session = session else {
+            print("セッションの初期化に失敗しました")
+            return
         }
 
-        // セッションを開始
-        captureSession?.startRunning()
+        let videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
+        guard let videoDeviceInput = try? AVCaptureDeviceInput(device: videoDevice!), session.canAddInput(videoDeviceInput) else {
+            print("カメラデバイスの入力を追加できません")
+            return
+        }
+        session.addInput(videoDeviceInput)
+
+        previewLayer = AVCaptureVideoPreviewLayer(session: session)
+        previewLayer?.videoGravity = .resizeAspectFill
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            session.startRunning()
+            DispatchQueue.main.async {
+                if session.isRunning {
+                    print("セッションが正常に開始されました")
+                    print("プレビューのレイヤーが設定されました: \(String(describing: self.previewLayer))")
+                } else {
+                    print("セッションの開始に失敗しました")
+                }
+            }
+        }
     }
 
     func stopSession() {
-        captureSession?.stopRunning()
-        captureSession = nil
-        videoPreviewLayer = nil
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.session?.stopRunning()
+            DispatchQueue.main.async {
+                self.session = nil
+                self.previewLayer = nil
+            }
+        }
     }
 
     func startRecording() {
-        guard !isRecording else { return }
-        
-        // 録画のURLを指定
-        let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString).appendingPathExtension("mov")
-        movieOutputURL = outputURL
-        
-        if let movieOutput = videoOutput {
-            movieOutput.startRecording(to: outputURL, recordingDelegate: self)
-            isRecording = true
-        }
+        // 録画開始の実装
+        isRecording = true
     }
 
     func stopRecording() {
-        guard isRecording else { return }
-        
-        if let movieOutput = videoOutput {
-            movieOutput.stopRecording()
-            isRecording = false
-        }
-    }
-
-    // AVCaptureFileOutputRecordingDelegate メソッドの実装
-    func fileOutput(_ output: AVCaptureFileOutput,
-                    didFinishRecordingTo outputFileURL: URL,
-                    from connections: [AVCaptureConnection],
-                    error: Error?) {
-        if let error = error {
-            print("録画エラー: \(error.localizedDescription)")
-        } else {
-            print("録画が完了しました。ファイルのURL: \(outputFileURL)")
-        }
+        // 録画停止の実装
+        isRecording = false
     }
 }

@@ -37,14 +37,14 @@ struct CameraPreviewLayerView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> UIView {
         let view = UIView()
-        previewLayer.frame = view.bounds
-        previewLayer.videoGravity = .resizeAspectFill
         view.layer.addSublayer(previewLayer)
         return view
     }
 
     func updateUIView(_ uiView: UIView, context: Context) {
-        // 更新が必要な場合の処理
+        DispatchQueue.main.async {
+            self.previewLayer.frame = uiView.bounds
+        }
     }
 }
 

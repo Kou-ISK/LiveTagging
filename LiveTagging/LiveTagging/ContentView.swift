@@ -16,11 +16,20 @@ struct ContentView: View {
     var body: some View {
         NavigationStack{
             // ライブラリから
-            NavigationLink(destination: EmptyView(), label: {Image(systemName: "folder.fill")})
+            NavigationLink(destination: EmptyView(), label: {
+                Image(systemName: "folder.fill")
+                Text("ライブラリから")
+            })
             // 新規レコード
-            NavigationLink(destination: LiveTaggingView(), label: {Image(systemName:"record.circle")})
+            NavigationLink(destination: LiveTaggingView(), label: {
+                Image(systemName:"record.circle")
+                Text("録画")
+            })
             // 閲覧
-            NavigationLink(destination: EmptyView(), label: {Image(systemName: "books.vertical.circle")})
+            NavigationLink(destination: EmptyView(), label: {
+                Image(systemName: "books.vertical.circle")
+                Text("タグ付け済み映像の閲覧")
+            })
         }
     }
 }

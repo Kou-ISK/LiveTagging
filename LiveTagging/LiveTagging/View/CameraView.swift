@@ -11,13 +11,32 @@ import AVFoundation
 struct LiveTaggingView: View {
     @StateObject private var cameraController = CameraController()
     var body: some View {
-        CameraRecordingView(cameraController: cameraController)
-            .onAppear {
-                cameraController.startSession()
+        ZStack{
+            CameraStreamView(cameraController: cameraController)
+            
+            // 録画開始/停止ボタン
+            Button(action: {
+                if cameraController.isRecording {
+                    cameraController.stopRecording()
+                } else {
+                    cameraController.startRecording()
+                }
+            }) {
+                Text(cameraController.isRecording ? "録画停止" : "録画開始")
+                    .font(.largeTitle)
+                    .padding()
+                    .background(cameraController.isRecording ? Color.red : Color.green)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
             }
-            .onDisappear {
-                cameraController.stopSession()
-            }
+            
+        }
+        .onAppear {
+            cameraController.startSession()
+        }
+        .onDisappear {
+            cameraController.stopSession()
+        }
     }
 }
 
