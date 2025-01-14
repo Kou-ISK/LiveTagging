@@ -14,8 +14,10 @@ class CameraController: NSObject, ObservableObject {
     @Published var previewLayer: AVCaptureVideoPreviewLayer?
     @Published var recordedVideoURL: URL?
     @Published var recordedLocalIdentifier: String? // ローカル識別子を保持
+    @Published var currentRecordingTime: Double = 0.0 // 録画時間を保持
     var session: AVCaptureSession?
     var movieOutput: AVCaptureMovieFileOutput?
+    private var timer: Timer?
     
     func startSession() {
         session = AVCaptureSession()
@@ -50,6 +52,7 @@ class CameraController: NSObject, ObservableObject {
                 if session.isRunning {
                     print("セッションが正常に開始されました")
                     print("プレビューのレイヤーが設定されました: \(String(describing: self.previewLayer))")
+                    self.updatePreviewLayerOrientation()
                 } else {
                     print("セッションの開始に失敗しました")
                 }
@@ -76,8 +79,17 @@ class CameraController: NSObject, ObservableObject {
         let outputPath = NSTemporaryDirectory() + "output_\(timestamp).mov"
         let outputURL = URL(fileURLWithPath: outputPath)
         print("録画開始: \(outputURL)")
+        
+        // ビデオの向きを設定
+        if let connection = movieOutput.connection(with: .video) {
+            if connection.isVideoOrientationSupported {
+                connection.videoOrientation = currentVideoOrientation()
+            }
+        }
+        
         movieOutput.startRecording(to: outputURL, recordingDelegate: self)
         isRecording = true
+        startTimer()
     }
     
     func stopRecording() {
@@ -87,10 +99,22 @@ class CameraController: NSObject, ObservableObject {
         }
         movieOutput.stopRecording()
         isRecording = false
+        stopTimer()
     }
     
-    func getCurrentRecordingTime() -> CMTime {
-        return movieOutput?.recordedDuration ?? CMTime.zero
+    private func updateRecordingTime() {
+        currentRecordingTime = movieOutput?.recordedDuration.seconds ?? CMTime.zero.seconds
+     }
+    
+    private func startTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+            self.updateRecordingTime()
+        }
+    }
+    
+    private func stopTimer() {
+        timer?.invalidate()
+        timer = nil
     }
     
     private func saveVideoToPhotosLibrary(from sourceURL: URL) {
@@ -140,6 +164,29 @@ class CameraController: NSObject, ObservableObject {
             } else {
                 print("ビデオURLの取得に失敗しました")
             }
+        }
+    }
+    
+    private func currentVideoOrientation() -> AVCaptureVideoOrientation {
+        let orientation = UIDevice.current.orientation
+        switch orientation {
+        case .portrait:
+            return .portrait
+        case .landscapeRight:
+            return .landscapeLeft
+        case .landscapeLeft:
+            return .landscapeRight
+        case .portraitUpsideDown:
+            return .portraitUpsideDown
+        default:
+            return .portrait
+        }
+    }
+    
+    func updatePreviewLayerOrientation() {
+        guard let previewLayer = previewLayer else { return }
+        if let connection = previewLayer.connection, connection.isVideoOrientationSupported {
+            connection.videoOrientation = currentVideoOrientation()
         }
     }
 }

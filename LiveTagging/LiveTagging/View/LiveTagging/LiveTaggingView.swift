@@ -22,10 +22,13 @@ struct LiveTaggingView: View {
             VStack{
                 Spacer()
                 if cameraController.isRecording {
-                    // タイムライン
-                    TimelineView(timeline: $videoItem.timeline).frame(maxHeight: 200)
+                    HStack{
+                        // タイムライン
+                        TimelineView(timeline: $videoItem.timeline).frame(maxHeight: 150)
+                        Spacer()
+                    }
                     // タグボタン
-                    TagButtonView(tagSet: tagSet, timeline: $videoItem.timeline, timeStamp: cameraController.getCurrentRecordingTime().seconds)
+                    TagButtonView(tagSet: tagSet, timeline: $videoItem.timeline, timeStamp: cameraController.currentRecordingTime)
                 }
                 // 録画開始/停止ボタン
                 Button(action: {
@@ -43,7 +46,6 @@ struct LiveTaggingView: View {
                         .font(.largeTitle)
                         .padding()
                         .foregroundColor(cameraController.isRecording ? Color.red : Color.white)
-                        .cornerRadius(10)
                 }
             }
         }

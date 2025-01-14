@@ -28,7 +28,7 @@ struct TagButtonView: View {
                     }, label: {
                         Text(tag.itemLabel)
                             .bold()
-                            .padding(4)
+                            .padding(8)
                             .foregroundStyle(.white)
                             .background(.gray.opacity(0.7))
                             .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -39,6 +39,6 @@ struct TagButtonView: View {
     }
 }
 
-//#Preview {
-//    TagButtonView(tagSet: CustomTagSet(id: UUID(), tagSetName: "タグセット", tags:[CustomTagItem(id: UUID(), itemLabel: "タックル"), CustomTagItem(id: UUID(), itemLabel: "パス")]))
-//}
+#Preview {
+    TagButtonView(tagSet: CustomTagSet(id: UUID(), tagSetName: "タグセット", tags: [CustomTagItem(id: UUID(), itemLabel: "ラベル")]), timeline: .constant([]), timeStamp: 1.22)
+}

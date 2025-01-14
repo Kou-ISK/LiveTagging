@@ -26,8 +26,11 @@ struct TaggedVideoView: View {
             
             VStack {
                 Spacer()
-                TaggedVideoTimelineView(timeline: $videoItem.timeline, player: player)
-                    .frame(maxHeight: 200)
+                HStack{
+                    TaggedVideoTimelineView(timeline: $videoItem.timeline, player: player)
+                        .frame(maxHeight: 150)
+                    Spacer()
+                }
             }
         }.onAppear{
             // ローカル識別子を使用してビデオを再取得

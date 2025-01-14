@@ -17,11 +17,14 @@ struct TimelineView: View {
                     HStack{
                         Text(formatTime(item.timeStamp))
                         Text(item.itemLabel)
-                    }.padding()
-                        .foregroundColor(.white)
+                    }
+                    .padding(4)
+                    .foregroundColor(.white)
                 }
             }
-        }.background(.gray.opacity(0.6)).padding(16)
+        }
+        .background(.gray.opacity(0.2))
+        .padding(.vertical, 32)
     }
     
     private func formatTime(_ time: Double) -> String {
