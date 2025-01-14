@@ -11,20 +11,31 @@ struct TimelineView: View {
     @Binding var timeline: [TimelineItem]
     var body: some View {
         // タイムライン
-        ScrollView(.vertical){
-            VStack(alignment:.leading){
-                ForEach(timeline, id:\.id){item in
-                    HStack{
-                        Text(formatTime(item.timeStamp))
-                        Text(item.itemLabel)
+        ScrollViewReader { proxy in
+            ScrollView(.vertical) {
+                VStack(alignment: .leading) {
+                    ForEach(timeline, id: \.id) { item in
+                        HStack {
+                            Text(formatTime(item.timeStamp))
+                            Text(item.itemLabel)
+                        }
+                        .padding(4)
+                        .foregroundColor(.white)
+                        .id(item.id) // 各アイテムにIDを設定
                     }
-                    .padding(4)
-                    .foregroundColor(.white)
+                }
+            }
+            .background(.gray.opacity(0.2))
+            .padding(.vertical, 32)
+            .onChange(of: timeline) { _ in
+                // タイムラインが更新された際に一番下までスクロール
+                if let lastItem = timeline.last {
+                    withAnimation {
+                        proxy.scrollTo(lastItem.id, anchor: .bottom)
+                    }
                 }
             }
         }
-        .background(.gray.opacity(0.2))
-        .padding(.vertical, 32)
     }
     
     private func formatTime(_ time: Double) -> String {
