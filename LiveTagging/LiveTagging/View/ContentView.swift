@@ -20,7 +20,7 @@ struct ContentView: View {
         NavigationStack{
             VStack(alignment: .leading){
                 // ライブラリから
-                NavigationLink(destination: EmptyView(), label: {
+                NavigationLink(destination: LibraryTaggingView(tagSet: testTagset), label: {
                     HStack{
                         Image(systemName: "folder.fill")
                         Text("ライブラリから")
