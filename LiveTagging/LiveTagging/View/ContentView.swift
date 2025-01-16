@@ -14,38 +14,35 @@ struct ContentView: View {
     @Query private var videoList: [VideoItem]
     
     // CustomTagSet のインスタンスを作成
-    let testTagset = CustomTagSet(id: UUID(), tagSetName: "タグセット", tags:[CustomTagItem(id: UUID(), itemLabel: "タックル"), CustomTagItem(id: UUID(), itemLabel: "パス")])
+    let testTagset = PreviewData().previewTagset
     
     var body: some View {
-        NavigationStack{
-            VStack(alignment: .leading){
-                // ライブラリから
-                NavigationLink(destination: LibraryTaggingView(tagSet: testTagset), label: {
-                    HStack{
-                        Image(systemName: "folder.fill")
-                        Text("ライブラリから")
+        NavigationStack {
+            VStack {
+                Text("Live Tagging")
+                    .font(.largeTitle)
+                    .bold()
+                    .padding(.top, 20)
+                
+                Grid {
+                    GridRow {
+                        NavigationLink(destination: LibraryTaggingView(tagSet: testTagset)) {
+                            CardView(icon: "folder.fill", title: "ライブラリから")
+                        }
+                        NavigationLink(destination: LiveTaggingView(tagSet: testTagset)) {
+                            CardView(icon: "record.circle", title: "録画")
+                        }
                     }
-                    .padding(4)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                })
-                // 新規レコード
-                NavigationLink(destination: LiveTaggingView(tagSet: testTagset), label: {
-                    HStack{
-                        Image(systemName:"record.circle")
-                        Text("録画")
+                    GridRow {
+                        NavigationLink(destination: TaggedVideoListView(videoList: videoList)) {
+                            CardView(icon: "books.vertical.circle", title: "タグ付け済み映像の閲覧")
+                        }
+                        NavigationLink(destination: SettingView(tagSetList: tagSetList)) {
+                            CardView(icon: "gear", title: "設定")
+                        }
                     }
-                    .padding(4)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                })
-                // 閲覧
-                NavigationLink(destination: TaggedVideoListView(videoList: videoList), label: {
-                    HStack{
-                        Image(systemName: "books.vertical.circle")
-                        Text("タグ付け済み映像の閲覧")
-                    }
-                    .padding(4)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                })
+                }
+                .padding()
             }
         }
     }
