@@ -13,13 +13,34 @@ struct LiveTaggingView: View {
     
     @StateObject private var cameraController = CameraController()
     @State private var videoItem = VideoItem(id: UUID(), videoTitle: "新規録画")
-    @State var tagSet: CustomTagSet
+    @State var tagSetList: [CustomTagSet]
+    @State var selectedTagSet: CustomTagSet
+    
+    init(tagSetList: [CustomTagSet]) {
+        self._tagSetList = State(initialValue: tagSetList)
+        self._selectedTagSet = State(initialValue: tagSetList.first ??
+                                     CustomTagSet(id: UUID(),
+                                                  tagSetName: "デフォルトタグセット",
+                                                  tags: [CustomTagItem(id: UUID(), itemLabel: "パス"),
+                                                         CustomTagItem(id: UUID(), itemLabel: "キャリー"),
+                                                         CustomTagItem(id: UUID(), itemLabel: "キック"),
+                                                         CustomTagItem(id: UUID(), itemLabel: "タックル")]))
+    }
     
     var body: some View {
         ZStack{
             CameraStreamView(cameraController: cameraController)
             
             VStack{
+                // TODO: ピッカーが表示されない問題に対処する
+                Picker("タグセット", selection: $selectedTagSet){
+                    ForEach(tagSetList, id:\.self.id){tagSet in
+                        Text(tagSet.tagSetName).tag(tagSet.tagSetName)
+                    }
+                }
+                .pickerStyle(MenuPickerStyle())
+                .padding()
+                
                 Spacer()
                 if cameraController.isRecording {
                     HStack{
@@ -28,7 +49,7 @@ struct LiveTaggingView: View {
                         Spacer()
                     }
                     // タグボタン
-                    TagButtonView(tagSet: tagSet, timeline: $videoItem.timeline, timeStamp: cameraController.currentRecordingTime)
+                    TagButtonView(tagSet: selectedTagSet, timeline: $videoItem.timeline, timeStamp: cameraController.currentRecordingTime)
                 }
                 // 録画開始/停止ボタン
                 Button(action: {
