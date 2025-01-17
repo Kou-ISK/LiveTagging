@@ -13,9 +13,6 @@ struct ContentView: View {
     @Query private var tagSetList: [CustomTagSet]
     @Query private var videoList: [VideoItem]
     
-    // CustomTagSet のインスタンスを作成
-    let testTagset = PreviewData().previewTagset
-    
     var body: some View {
         NavigationStack {
             VStack {
@@ -26,17 +23,19 @@ struct ContentView: View {
                 
                 Grid {
                     GridRow {
-                        NavigationLink(destination: LibraryTaggingView(tagSet: testTagset)) {
-                            CardView(icon: "folder.fill", title: "ライブラリから")
-                        }
-                        NavigationLink(destination: LiveTaggingView(tagSet: testTagset)) {
+                        // TODO: いつか実装する
+//                        NavigationLink(destination: LibraryTaggingView(tagSet: testTagset)) {
+//                            CardView(icon: "folder.fill", title: "ライブラリから")
+//                        }
+                        NavigationLink(destination: LiveTaggingView(tagSetList: tagSetList)) {
                             CardView(icon: "record.circle", title: "録画")
                         }
-                    }
-                    GridRow {
                         NavigationLink(destination: TaggedVideoListView(videoList: videoList)) {
                             CardView(icon: "books.vertical.circle", title: "タグ付け済み映像の閲覧")
                         }
+                    }
+                    GridRow {
+                        
                         NavigationLink(destination: SettingView(tagSetList: tagSetList)) {
                             CardView(icon: "gear", title: "設定")
                         }
