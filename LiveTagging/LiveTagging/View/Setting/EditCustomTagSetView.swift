@@ -10,7 +10,7 @@ import SwiftUI
 struct EditCustomTagSetView: View {
     @Environment(\.modelContext)private var modelContext
     
-    @State var tagSet: CustomTagSet
+    @Binding var tagSet: CustomTagSet
     @State private var currentTagItemLabel: String = ""
     
     var body: some View {
@@ -22,7 +22,9 @@ struct EditCustomTagSetView: View {
             HStack{
                 Button(action: {
                     if(!currentTagItemLabel.isEmpty){
-                        tagSet.tags.append(CustomTagItem(id: UUID(), itemLabel: currentTagItemLabel))
+                        let newTagItem = CustomTagItem(id: UUID(), itemLabel: currentTagItemLabel)
+                        tagSet.tags.append(newTagItem)
+                        modelContext.insert(newTagItem)
                         currentTagItemLabel = ""
                         do{
                             try modelContext.save()
@@ -40,5 +42,5 @@ struct EditCustomTagSetView: View {
 }
 
 #Preview {
-    EditCustomTagSetView(tagSet: PreviewData().previewTagset)
+    EditCustomTagSetView(tagSet: .constant(PreviewData().previewTagset))
 }

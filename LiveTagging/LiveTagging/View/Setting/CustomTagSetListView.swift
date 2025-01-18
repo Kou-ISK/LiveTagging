@@ -10,22 +10,24 @@ import SwiftUI
 struct CustomTagSetListView: View {
     @Environment(\.modelContext)private var modelContext
     
-    @State var tagSetList: [CustomTagSet]
-    @State private var currentTagSetName: String = ""
+    @Binding var tagSetList: [CustomTagSet]
+    @State private var currentTagSetListName: String = ""
     
     var body: some View {
         NavigationStack{
             List{
-                ForEach(tagSetList, id:\.self.id){tagSet in
-                    NavigationLink(destination: EditCustomTagSetView(tagSet: tagSet), label: {
+                ForEach($tagSetList, id:\.self.id){$tagSet in
+                    NavigationLink(destination: EditCustomTagSetView(tagSet: $tagSet), label: {
                     Text(tagSet.tagSetName)
                 })
             }
                 HStack{
                     Button(action: {
-                        if(!currentTagSetName.isEmpty){
-                            tagSetList.append(CustomTagSet(id: UUID(), tagSetName: currentTagSetName, tags: []))
-                            currentTagSetName = ""
+                        if(!currentTagSetListName.isEmpty){
+                            let newTagSet = CustomTagSet(id: UUID(), tagSetName: currentTagSetListName, tags: [])
+                            tagSetList.append(newTagSet)
+                            modelContext.insert(newTagSet)
+                            currentTagSetListName = ""
                             do{
                                 try modelContext.save()
                             }catch{
@@ -35,7 +37,7 @@ struct CustomTagSetListView: View {
                     }, label: {
                         Image(systemName: "plus.circle.fill").foregroundStyle(.blue)
                     }).padding(.horizontal, 4)
-                    TextField("新規タグ", text: $currentTagSetName)
+                    TextField("新規タグセット", text: $currentTagSetListName)
                 }
             }
         }
@@ -43,5 +45,5 @@ struct CustomTagSetListView: View {
 }
 
 #Preview {
-    CustomTagSetListView(tagSetList: PreviewData().previewTagsetList)
+    CustomTagSetListView(tagSetList: .constant(PreviewData().previewTagsetList))
 }
