@@ -28,36 +28,45 @@ struct LiveTaggingView: View {
     }
     
     var body: some View {
-        ZStack{
+        ZStack {
             CameraStreamView(cameraController: cameraController)
             
-            VStack{
-                // TODO: ピッカーが表示されない問題に対処する
-                Picker("タグセット", selection: $selectedTagSet){
-                    ForEach(tagSetList, id:\.self.id){tagSet in
-                        Text(tagSet.tagSetName).tag(tagSet.tagSetName)
+            VStack {
+                
+                HStack {
+                    Spacer()
+                    if !tagSetList.isEmpty {
+                        // タグセット選択用Picker
+                        Picker("タグセット", selection: $selectedTagSet) {
+                            ForEach(tagSetList, id: \.self) { tagSet in
+                                Text(tagSet.tagSetName).tag(tagSet)
+                            }
+                        }
+                        .pickerStyle(MenuPickerStyle())
+                        .background(Color.white.opacity(0.7))
+                        .cornerRadius(10)
+                        .padding()
                     }
                 }
-                .pickerStyle(MenuPickerStyle())
-                .padding()
                 
                 Spacer()
                 if cameraController.isRecording {
-                    HStack{
+                    HStack {
                         // タイムライン
-                        TimelineView(timeline: $videoItem.timeline).frame(maxHeight: 150)
+                        TimelineView(timeline: $videoItem.timeline)
+                            .frame(maxHeight: 200)
                         Spacer()
                     }
-                    // タグボタン
-                    TagButtonView(tagSet: selectedTagSet, timeline: $videoItem.timeline, timeStamp: cameraController.currentRecordingTime)
                 }
+                // タグボタン
+                TagButtonView(tagSet: selectedTagSet, timeline: $videoItem.timeline, timeStamp: cameraController.currentRecordingTime)
+                
                 // 録画開始/停止ボタン
                 Button(action: {
                     if cameraController.isRecording {
                         // 録画終了
                         cameraController.stopRecording()
-                        videoItem.timeline.sort{$0.timeStamp < $1.timeStamp}
-                        modelContext.insert(videoItem)
+                        videoItem.timeline.sort { $0.timeStamp < $1.timeStamp }
                     } else {
                         // 録画開始
                         cameraController.startRecording()
@@ -76,14 +85,14 @@ struct LiveTaggingView: View {
         .onDisappear {
             cameraController.stopSession()
         }
-        .onChange(of: cameraController.recordedVideoURL) { newURL in
-            if let newURL = newURL {
+        .onChange(of: cameraController.recordedVideoURL) {
+            if let newURL = cameraController.recordedVideoURL {
                 videoItem.videoURL = newURL
                 print("新しいビデオURL: \(newURL)")
             }
         }
-        .onChange(of: cameraController.recordedLocalIdentifier) { newIdentifier in
-            if let newURL = newIdentifier {
+        .onChange(of: cameraController.recordedLocalIdentifier) {
+            if let newIdentifier = cameraController.recordedLocalIdentifier {
                 videoItem.localIdentifier = newIdentifier
                 print("新しいlocalIdentifier: \(newIdentifier)")
             }
