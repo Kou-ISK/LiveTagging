@@ -17,6 +17,8 @@ class CameraController: NSObject, ObservableObject {
     @Published var currentRecordingTime: Double = 0.0 // 録画時間を保持
     var session: AVCaptureSession?
     var movieOutput: AVCaptureMovieFileOutput?
+    var videoDevice: AVCaptureDevice?
+    
     private var timer: Timer?
     
     func startSession() {
@@ -28,12 +30,19 @@ class CameraController: NSObject, ObservableObject {
             return
         }
         
-        let videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
+        videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
         guard let videoDeviceInput = try? AVCaptureDeviceInput(device: videoDevice!), session.canAddInput(videoDeviceInput) else {
             print("カメラデバイスの入力を追加できません")
             return
         }
         session.addInput(videoDeviceInput)
+        
+        let audioDevice = AVCaptureDevice.default(for: .audio)
+        guard let audioDeviceInput = try? AVCaptureDeviceInput(device: audioDevice!), session.canAddInput(audioDeviceInput) else {
+            print("オーディオデバイスの入力を追加できません")
+            return
+        }
+        session.addInput(audioDeviceInput)
         
         movieOutput = AVCaptureMovieFileOutput()
         if session.canAddOutput(movieOutput!) {
@@ -104,7 +113,7 @@ class CameraController: NSObject, ObservableObject {
     
     private func updateRecordingTime() {
         currentRecordingTime = movieOutput?.recordedDuration.seconds ?? CMTime.zero.seconds
-     }
+    }
     
     private func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
@@ -187,6 +196,17 @@ class CameraController: NSObject, ObservableObject {
         guard let previewLayer = previewLayer else { return }
         if let connection = previewLayer.connection, connection.isVideoOrientationSupported {
             connection.videoOrientation = currentVideoOrientation()
+        }
+    }
+    
+    func zoom(factor: CGFloat) {
+        guard let device = videoDevice else { return }
+        do {
+            try device.lockForConfiguration()
+            device.videoZoomFactor = max(1.0, min(factor, device.activeFormat.videoMaxZoomFactor))
+            device.unlockForConfiguration()
+        } catch {
+            print("ズームの設定に失敗しました: \(error.localizedDescription)")
         }
     }
 }
