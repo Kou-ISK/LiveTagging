@@ -10,11 +10,13 @@ import AVFoundation
 
 struct LiveTaggingView: View {
     @Environment(\.modelContext)private var modelContext
+    @Environment(\.dismiss) private var dismiss
     
     @StateObject private var cameraController = CameraController()
     @State private var videoItem = VideoItem(id: UUID(), videoTitle: "新規録画")
     @State var tagSetList: [CustomTagSet]
     @State var selectedTagSet: CustomTagSet
+    @State private var showAlert = false
     
     init(tagSetList: [CustomTagSet]) {
         self._tagSetList = State(initialValue: tagSetList)
@@ -83,7 +85,11 @@ struct LiveTaggingView: View {
             cameraController.startSession()
         }
         .onDisappear {
-            cameraController.stopSession()
+            if cameraController.isRecording {
+                showAlert = true
+            } else {
+                cameraController.stopSession()
+            }
         }
         .onChange(of: cameraController.recordedVideoURL) {
             if let newURL = cameraController.recordedVideoURL {
@@ -96,6 +102,18 @@ struct LiveTaggingView: View {
                 videoItem.localIdentifier = newIdentifier
                 print("新しいlocalIdentifier: \(newIdentifier)")
             }
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("録画中です"),
+                message: Text("録画を終了してから戻りますか？"),
+                primaryButton: .destructive(Text("はい")) {
+                    cameraController.stopRecording()
+                    cameraController.stopSession()
+                    dismiss()
+                },
+                secondaryButton: .cancel(Text("いいえ"))
+            )
         }
     }
 }
