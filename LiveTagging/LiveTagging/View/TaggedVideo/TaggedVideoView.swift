@@ -25,6 +25,15 @@ struct TaggedVideoView: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
+                HStack{
+                    Spacer()
+                    // タイムライン共有リンク
+                    ShareLink(item: generateTimelineText(from: videoItem.timeline)) {
+                        Image(systemName: "square.and.arrow.up")
+                            .foregroundColor(.blue)
+                            .padding()
+                    }
+                }
                 Spacer()
                 HStack{
                     TaggedVideoTimelineView(timeline: $videoItem.timeline, player: player)
@@ -33,6 +42,19 @@ struct TaggedVideoView: View {
                 }
             }
         }
+    }
+    
+    private func generateTimelineText(from timeline: [TimelineItem]) -> String {
+        guard !timeline.isEmpty else {
+            return "タイムラインは空です。"
+        }
+        return timeline.map { "\(formatTime($0.timeStamp)) \($0.itemLabel)" }.joined(separator: "\n")
+    }
+    
+    private func formatTime(_ time: Double) -> String {
+        let minutes = Int(time) / 60
+        let seconds = Int(time) % 60
+        return String(format: "%02d:%02d", minutes, seconds)
     }
 }
 

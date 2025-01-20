@@ -38,9 +38,6 @@ struct TaggedVideoListView: View {
                 .onDelete(perform: deleteItems)
             }
             .navigationTitle("ビデオリスト")
-            .toolbar {
-                EditButton()
-            }
         }
         .onAppear {
             updateVideoURLs()
