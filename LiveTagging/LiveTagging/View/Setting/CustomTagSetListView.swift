@@ -45,5 +45,5 @@ struct CustomTagSetListView: View {
 }
 
 #Preview {
-    CustomTagSetListView(tagSetList: .constant(PreviewData().previewTagsetList))
+    CustomTagSetListView(tagSetList: .constant(previewTagsetList))
 }

@@ -12,14 +12,22 @@ import Photos
 struct TaggedVideoListView: View {
     @Environment(\.modelContext) private var modelContext
     @State var videoList: [VideoItem]
+    @State var isEditMode = false
     
     var body: some View {
         NavigationView {
             List {
                 ForEach($videoList, id: \.id) { $videoItem in
-                    NavigationLink(destination: TaggedVideoView(videoItem: $videoItem)) {
+                    if(isEditMode){
                         HStack {
-                            Text(videoItem.videoTitle)
+                            TextField(videoItem.videoTitle, text: $videoItem.videoTitle).onSubmit {
+                                do{
+                                    try modelContext.save()
+                                    print("保存しました")
+                                }catch{
+                                    print("ビデオタイトル更新に失敗しました: \(error.localizedDescription)")
+                                }
+                            }
                             if let thumbnailImage = generateThumbnail(for: videoItem.videoURL) {
                                 Image(uiImage: thumbnailImage)
                                     .resizable()
@@ -33,9 +41,33 @@ struct TaggedVideoListView: View {
                                     .cornerRadius(8)
                             }
                         }
+                    }else{
+                        NavigationLink(destination: TaggedVideoView(videoItem: $videoItem)) {
+                            HStack {
+                                Text(videoItem.videoTitle)
+                                if let thumbnailImage = generateThumbnail(for: videoItem.videoURL) {
+                                    Image(uiImage: thumbnailImage)
+                                        .resizable()
+                                        .frame(width: 100, height: 100)
+                                        .aspectRatio(contentMode: .fit)
+                                        .cornerRadius(8)
+                                } else {
+                                    Text("サムネイルなし")
+                                        .frame(width: 100, height: 100)
+                                        .background(Color.gray)
+                                        .cornerRadius(8)
+                                }
+                            }
+                        }
                     }
                 }
                 .onDelete(perform: deleteItems)
+            }.toolbar{
+                ToolbarItem(placement: .topBarTrailing, content: {
+                    Button("編集"){
+                        isEditMode.toggle()
+                    }
+                })
             }
             .navigationTitle("ビデオリスト")
         }

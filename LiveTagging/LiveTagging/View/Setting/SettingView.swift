@@ -17,5 +17,5 @@ struct SettingView: View {
 }
 
 #Preview {
-    SettingView(tagSetList: PreviewData().previewTagsetList)
+    SettingView(tagSetList: previewTagsetList)
 }
