@@ -21,42 +21,17 @@ struct TaggedVideoListView: View {
                     if(isEditMode){
                         HStack {
                             TextField(videoItem.videoTitle, text: $videoItem.videoTitle).onSubmit {
-                                do{
-                                    try modelContext.save()
-                                    print("保存しました")
-                                }catch{
-                                    print("ビデオタイトル更新に失敗しました: \(error.localizedDescription)")
-                                }
-                            }
-                            if let thumbnailImage = generateThumbnail(for: videoItem.videoURL) {
-                                Image(uiImage: thumbnailImage)
-                                    .resizable()
-                                    .frame(width: 100, height: 100)
-                                    .aspectRatio(contentMode: .fit)
-                                    .cornerRadius(8)
-                            } else {
-                                Text("サムネイルなし")
-                                    .frame(width: 100, height: 100)
-                                    .background(Color.gray)
-                                    .cornerRadius(8)
-                            }
+                                saveContext()
+                            }.padding(4)
+                            Spacer()
+                            ThumbnailView(videoURL: videoItem.videoURL)
                         }
                     }else{
                         NavigationLink(destination: TaggedVideoView(videoItem: $videoItem)) {
                             HStack {
                                 Text(videoItem.videoTitle)
-                                if let thumbnailImage = generateThumbnail(for: videoItem.videoURL) {
-                                    Image(uiImage: thumbnailImage)
-                                        .resizable()
-                                        .frame(width: 100, height: 100)
-                                        .aspectRatio(contentMode: .fit)
-                                        .cornerRadius(8)
-                                } else {
-                                    Text("サムネイルなし")
-                                        .frame(width: 100, height: 100)
-                                        .background(Color.gray)
-                                        .cornerRadius(8)
-                                }
+                                Spacer()
+                                ThumbnailView(videoURL: videoItem.videoURL)
                             }
                         }
                     }
@@ -84,20 +59,12 @@ struct TaggedVideoListView: View {
         videoList.remove(atOffsets: offsets)
     }
     
-    private func generateThumbnail(for url: URL?) -> UIImage? {
-        guard let url = url else { return nil }
-        
-        let asset = AVAsset(url: url)
-        let imageGenerator = AVAssetImageGenerator(asset: asset)
-        imageGenerator.appliesPreferredTrackTransform = true
-        
-        let time = CMTime(seconds: 1, preferredTimescale: 600)
-        do {
-            let cgImage = try imageGenerator.copyCGImage(at: time, actualTime: nil)
-            return UIImage(cgImage: cgImage)
-        } catch {
-            print("サムネイル生成に失敗しました: \(error.localizedDescription)")
-            return nil
+    private func saveContext(){
+        do{
+            try modelContext.save()
+            print("保存しました")
+        }catch{
+            print("ビデオタイトル更新に失敗しました: \(error.localizedDescription)")
         }
     }
     

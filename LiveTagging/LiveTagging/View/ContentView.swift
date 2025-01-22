@@ -24,20 +24,44 @@ struct ContentView: View {
                 Grid {
                     GridRow {
                         // TODO: いつか実装する
-//                        NavigationLink(destination: LibraryTaggingView(tagSet: testTagset)) {
-//                            CardView(icon: "folder.fill", title: "ライブラリから")
-//                        }
+                        //                        NavigationLink(destination: LibraryTaggingView(tagSet: testTagset)) {
+                        //                            CardView(icon: "folder.fill", title: "ライブラリから")
+                        //                        }
                         NavigationLink(destination: LiveTaggingView(tagSetList: tagSetList)) {
-                            CardView(icon: "record.circle", title: "録画")
+                            CardView(
+                                icon: "record.circle",
+                                title: "録画",
+                                gradient: LinearGradient(
+                                    colors: [Color.red, Color.purple],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                            )
+                            
                         }
                         NavigationLink(destination: TaggedVideoListView(videoList: videoList)) {
-                            CardView(icon: "books.vertical.circle", title: "タグ付け済み映像の閲覧")
+                            CardView(
+                                icon: "books.vertical.circle",
+                                title: "タグ付け済み映像",
+                                gradient: LinearGradient(
+                                    colors: [Color.green, Color.blue],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                            )
                         }
                     }
                     GridRow {
-                        
                         NavigationLink(destination: SettingView(tagSetList: tagSetList)) {
-                            CardView(icon: "gear", title: "設定")
+                            CardView(
+                                icon: "gear",
+                                title: "設定",
+                                gradient: LinearGradient(
+                                    colors: [Color.blue, Color.gray],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                            )
                         }
                     }
                 }

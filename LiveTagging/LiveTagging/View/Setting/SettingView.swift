@@ -11,7 +11,9 @@ struct SettingView: View {
     @State var tagSetList: [CustomTagSet]
     var body: some View {
         NavigationStack{
-            NavigationLink(destination: CustomTagSetListView(tagSetList: $tagSetList), label: {Text("カスタムタグセット管理")})
+            List{
+                NavigationLink(destination: CustomTagSetListView(tagSetList: $tagSetList), label: {Text("カスタムタグセット管理")})
+            }
         }
     }
 }
