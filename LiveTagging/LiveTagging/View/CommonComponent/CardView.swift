@@ -28,9 +28,6 @@ struct CardView: View {
         .background(gradient)
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 5)
-//        .onTapGesture {
-//            print("\(title) カードがタップされました")
-//        }
     }
 }
 
