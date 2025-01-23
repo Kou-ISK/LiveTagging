@@ -18,6 +18,6 @@ struct SettingView: View {
     }
 }
 
-#Preview {
-    SettingView(tagSetList: previewTagsetList)
-}
+//#Preview {
+//    SettingView(tagSetList: previewTagsetList)
+//}

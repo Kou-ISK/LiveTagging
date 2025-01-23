@@ -30,7 +30,7 @@ struct ContentView: View {
                         NavigationLink(destination: LiveTaggingView(tagSetList: tagSetList)) {
                             CardView(
                                 icon: "record.circle",
-                                title: "録画",
+                                title: NSLocalizedString("録画", comment: "録画"),
                                 gradient: LinearGradient(
                                     colors: [Color.red, Color.purple],
                                     startPoint: .top,
@@ -42,7 +42,7 @@ struct ContentView: View {
                         NavigationLink(destination: TaggedVideoListView(videoList: videoList)) {
                             CardView(
                                 icon: "books.vertical.circle",
-                                title: "タグ付け済み映像",
+                                title: NSLocalizedString("タグ付け済み映像", comment: "タグ付け済み映像"),
                                 gradient: LinearGradient(
                                     colors: [Color.green, Color.blue],
                                     startPoint: .top,
@@ -55,7 +55,7 @@ struct ContentView: View {
                         NavigationLink(destination: SettingView(tagSetList: tagSetList)) {
                             CardView(
                                 icon: "gear",
-                                title: "設定",
+                                title: NSLocalizedString("設定", comment: "設定"),
                                 gradient: LinearGradient(
                                     colors: [Color.blue, Color.gray],
                                     startPoint: .top,
@@ -65,7 +65,6 @@ struct ContentView: View {
                         }
                     }
                 }
-                .padding()
             }
         }
     }

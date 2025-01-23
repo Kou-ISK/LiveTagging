@@ -69,6 +69,7 @@ struct LiveTaggingView: View {
                         // 録画終了
                         cameraController.stopRecording()
                         videoItem.timeline.sort { $0.timeStamp < $1.timeStamp }
+                        saveVideoItem()
                     } else {
                         // 録画開始
                         cameraController.startRecording()
@@ -114,6 +115,17 @@ struct LiveTaggingView: View {
                 },
                 secondaryButton: .cancel(Text("いいえ"))
             )
+        }
+    }
+    
+    // 録画終了時にVideoItemをSwiftDataに保存
+    private func saveVideoItem() {
+        do {
+            modelContext.insert(videoItem)
+            try modelContext.save()
+            print("ビデオアイテムが保存されました")
+        } catch {
+            print("ビデオアイテムの保存に失敗しました: \(error.localizedDescription)")
         }
     }
 }

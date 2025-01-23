@@ -97,6 +97,23 @@
         }
       }
     },
+    "タグ付け済み映像" : {
+      "comment" : "タグ付け済み映像",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tagged Video"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タグ付け済み映像"
+          }
+        }
+      }
+    },
     "はい" : {
       "localizations" : {
         "en" : {
@@ -171,8 +188,42 @@
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "編集"
+          }
+        }
+      }
+    },
+    "設定" : {
+      "comment" : "設定",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Setting"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定"
+          }
+        }
+      }
+    },
+    "録画" : {
+      "comment" : "録画",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capture"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "録画"
           }
         }
       }
