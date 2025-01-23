@@ -161,6 +161,22 @@
         }
       }
     },
+    "編集" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "編集"
+          }
+        }
+      }
+    },
     "録画を終了してから戻りますか？" : {
       "localizations" : {
         "en" : {
