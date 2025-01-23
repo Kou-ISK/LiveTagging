@@ -13,7 +13,7 @@ struct LiveTaggingView: View {
     @Environment(\.dismiss) private var dismiss
     
     @StateObject private var cameraController = CameraController()
-    @State private var videoItem = VideoItem(id: UUID(), videoTitle: "新規録画")
+    @State private var videoItem = VideoItem(id: UUID(), videoTitle: NSLocalizedString("新規録画", comment: "新規録画"))
     @State var tagSetList: [CustomTagSet]
     @State var selectedTagSet: CustomTagSet
     @State private var showAlert = false

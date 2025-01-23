@@ -178,6 +178,23 @@
         }
       }
     },
+    "新規録画" : {
+      "comment" : "新規録画",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Clip"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新規録画"
+          }
+        }
+      }
+    },
     "編集" : {
       "localizations" : {
         "en" : {
