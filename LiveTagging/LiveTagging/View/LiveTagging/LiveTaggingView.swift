@@ -12,7 +12,12 @@ struct LiveTaggingView: View {
     @Environment(\.modelContext)private var modelContext
     @Environment(\.dismiss) private var dismiss
     
+#if targetEnvironment(simulator)
+    @StateObject private var cameraController = MockCameraController()
+#else
     @StateObject private var cameraController = CameraController()
+#endif
+    
     @State private var videoItem = VideoItem(id: UUID(), videoTitle: NSLocalizedString("新規録画", comment: "新規録画"))
     @State var tagSetList: [CustomTagSet]
     @State var selectedTagSet: CustomTagSet
@@ -31,8 +36,11 @@ struct LiveTaggingView: View {
     
     var body: some View {
         ZStack {
+#if targetEnvironment(simulator)
+            MockCameraStreamView(cameraController: cameraController)
+#else
             CameraStreamView(cameraController: cameraController)
-            
+#endif
             VStack {
                 
                 HStack {
@@ -130,6 +138,6 @@ struct LiveTaggingView: View {
     }
 }
 
-//#Preview {
-//    LiveTaggingView()
-//}
+#Preview {
+    LiveTaggingView(tagSetList: previewTagsetList)
+}
