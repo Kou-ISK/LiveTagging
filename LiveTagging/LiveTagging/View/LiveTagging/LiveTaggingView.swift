@@ -64,7 +64,6 @@ struct LiveTaggingView: View {
                     HStack {
                         // タイムライン
                         TimelineView(timeline: $videoItem.timeline)
-                            .frame(maxHeight: 200)
                         Spacer()
                     }
                 }

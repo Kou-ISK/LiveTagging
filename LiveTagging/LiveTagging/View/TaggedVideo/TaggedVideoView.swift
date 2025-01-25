@@ -13,6 +13,7 @@ struct TaggedVideoView: View {
     @Binding var videoItem: VideoItem
     
     @State var player: AVPlayer
+    @State var isEditMode: Bool = false
         
         init(videoItem: Binding<VideoItem>) {
             self._videoItem = videoItem
@@ -33,11 +34,13 @@ struct TaggedVideoView: View {
                             .foregroundColor(.blue)
                             .padding()
                     }
+                    Button("編集"){
+                        isEditMode.toggle()
+                    }
                 }
                 Spacer()
                 HStack{
-                    TaggedVideoTimelineView(timeline: $videoItem.timeline, player: player)
-                        .frame(maxHeight: 150)
+                    TaggedVideoTimelineView(timeline: $videoItem.timeline, isEditMode: $isEditMode, player: player)
                     Spacer()
                 }
             }

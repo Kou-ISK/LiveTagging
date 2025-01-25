@@ -25,8 +25,8 @@ struct TimelineView: View {
                     }
                 }
             }
+            .frame(maxWidth: 200, maxHeight: 150)
             .background(.gray.gradient.opacity(0.2))
-            .padding(.vertical, 32)
             .onChange(of: timeline) {
                 // タイムラインが更新された際に一番下までスクロール
                 if let lastItem = timeline.last {
