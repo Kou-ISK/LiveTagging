@@ -30,7 +30,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		78CC6A1D2D32AE640009FD43 /* Exceptions for "LiveTagging" folder in "LiveTagging" target */ = {
+		782B24362D44852900EB8572 /* Exceptions for "LiveTagging" folder in "LiveTagging" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -43,7 +43,7 @@
 		7860DDC22D32937B007C5C2B /* LiveTagging */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				78CC6A1D2D32AE640009FD43 /* Exceptions for "LiveTagging" folder in "LiveTagging" target */,
+				782B24362D44852900EB8572 /* Exceptions for "LiveTagging" folder in "LiveTagging" target */,
 			);
 			path = LiveTagging;
 			sourceTree = "<group>";
@@ -418,7 +418,7 @@
 				INFOPLIST_FILE = LiveTagging/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Live Tagging";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
-				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera to take pictures.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera to record videos, add timestamps and tags, and save the videos locally on your device.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app uses a microphone to record videos.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "You need to grant permission to save videos to your photo library.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "It accesses the photo library to save the captured photos.";
@@ -454,7 +454,7 @@
 				INFOPLIST_FILE = LiveTagging/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Live Tagging";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
-				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera to take pictures.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera to record videos, add timestamps and tags, and save the videos locally on your device.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app uses a microphone to record videos.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "You need to grant permission to save videos to your photo library.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "It accesses the photo library to save the captured photos.";
