@@ -59,7 +59,7 @@ struct TaggedVideoTimelineView: View {
             }
         }
         .background(.gray.opacity(0.2))
-        .frame(maxWidth: 250, maxHeight: 150)
+        .frame(maxWidth: 250, maxHeight: 150, alignment: .leading)
         .padding(.vertical, 32)
     }
     

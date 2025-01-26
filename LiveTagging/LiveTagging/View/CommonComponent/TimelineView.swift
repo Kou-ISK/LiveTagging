@@ -35,7 +35,7 @@ struct TimelineView: View {
                     }
                 }
             }
-        }.frame(maxWidth: 200, maxHeight: 150)
+        }.frame(maxWidth: 200, maxHeight: 150, alignment: .leading)
     }
     
     private func formatTime(_ time: Double) -> String {
