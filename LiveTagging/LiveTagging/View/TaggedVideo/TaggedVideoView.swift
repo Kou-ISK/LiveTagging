@@ -25,7 +25,7 @@ struct TaggedVideoView: View {
             VideoPlayer(player: player)
                 .edgesIgnoringSafeArea(.all)
             
-            VStack {
+            VStack(alignment:.leading) {
                 HStack{
                     Spacer()
                     // タイムライン共有リンク
@@ -40,6 +40,7 @@ struct TaggedVideoView: View {
                 }
                 Spacer()
                 HStack{
+                    // TODO: 左寄せにする
                     TaggedVideoTimelineView(timeline: $videoItem.timeline, isEditMode: $isEditMode, player: player)
                     Spacer()
                 }

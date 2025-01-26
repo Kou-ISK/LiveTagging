@@ -25,7 +25,7 @@ struct TimelineView: View {
                     }
                 }
             }
-            .frame(maxWidth: 200, maxHeight: 150)
+            
             .background(.gray.gradient.opacity(0.2))
             .onChange(of: timeline) {
                 // タイムラインが更新された際に一番下までスクロール
@@ -35,7 +35,7 @@ struct TimelineView: View {
                     }
                 }
             }
-        }
+        }.frame(maxWidth: 200, maxHeight: 150)
     }
     
     private func formatTime(_ time: Double) -> String {

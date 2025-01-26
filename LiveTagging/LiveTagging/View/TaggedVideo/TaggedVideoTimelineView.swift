@@ -17,49 +17,50 @@ struct TaggedVideoTimelineView: View {
     var player: AVPlayer
     
     var body: some View {
+        VStack(alignment:.leading){
         ScrollView(.vertical){
-            VStack(alignment:.leading){
                 ForEach($timeline, id:\.id){$item in
-                        HStack{
-                            // 編集モードの際のみ表示
-                            if(isEditMode){
-                                // 削除ボタン
-                                Button(action: {
-                                    deleteTimelineItem(item: item)
-                                }) {
-                                    Image(systemName: "minus.circle.fill")
-                                        .foregroundColor(.red)
-                                        .padding(.leading, 10)
-                                }
+                    HStack{
+                        // 編集モードの際のみ表示
+                        if(isEditMode){
+                            // 削除ボタン
+                            Button(action: {
+                                deleteTimelineItem(item: item)
+                            }) {
+                                Image(systemName: "minus.circle.fill")
+                                    .foregroundColor(.red)
+                                    .padding(.leading, 10)
                             }
-                            
-                            Button(action:{
-                                let targetTime = CMTime(seconds: item.timeStamp, preferredTimescale: 600)
-                                player.seek(to: targetTime)
-                            }, label: {
-                                HStack{
-                                    Text(formatTime(item.timeStamp))
-                                }
-                                .padding(.horizontal, 4)
-                                .foregroundColor(.white)
-                            })
-                            
-                            if(isEditMode){
-                                // 編集モードの際は変更可能
-                                TextField("", text: $item.itemLabel).onSubmit {
-                                    saveContext()
-                                }
-                            }else{
-                                Text(item.itemLabel)
+                        }
+                        
+                        Button(action:{
+                            let targetTime = CMTime(seconds: item.timeStamp, preferredTimescale: 600)
+                            player.seek(to: targetTime)
+                        }, label: {
+                            HStack{
+                                Text(formatTime(item.timeStamp))
                             }
-                        }.foregroundStyle(.white)
-                        .padding(4)
-                    
+                            .padding(.horizontal, 4)
+                            .foregroundColor(.white)
+                        })
+                        
+                        if(isEditMode){
+                            // 編集モードの際は変更可能
+                            TextField("", text: $item.itemLabel).onSubmit {
+                                saveContext()
+                            }
+                        }else{
+                            Text(item.itemLabel)
+                        }
+                    }
+                    .foregroundStyle(.white)
+                    .padding(4)
                 }
             }
-        }.frame(maxWidth: 200, maxHeight: 150)
-            .background(.gray.opacity(0.2))
-            .padding(.vertical, 32)
+        }
+        .background(.gray.opacity(0.2))
+        .frame(maxWidth: 250, maxHeight: 150)
+        .padding(.vertical, 32)
     }
     
     private func formatTime(_ time: Double) -> String {
@@ -89,15 +90,15 @@ struct TaggedVideoTimelineView: View {
 }
 
 #Preview {
-    TaggedVideoTimelineView(timeline: .constant([
-        TimelineItem(id: UUID(), timeStamp: 1.023, itemLabel: "タックル"),
-        TimelineItem(id: UUID(), timeStamp: 1.023, itemLabel: "タックル")
-    ]), isEditMode: .constant(true), player: AVPlayer(url: URL(filePath: "/Users/isakakou/Desktop/dynamic2.mov")!)
-    )
-    
-    TaggedVideoTimelineView(timeline: .constant([
-        TimelineItem(id: UUID(), timeStamp: 1.023, itemLabel: "タックル"),
-        TimelineItem(id: UUID(), timeStamp: 1.023, itemLabel: "タックル")
-    ]), isEditMode: .constant(false), player: AVPlayer(url: URL(filePath: "/Users/isakakou/Desktop/dynamic2.mov")!)
-    )
+        TaggedVideoTimelineView(timeline: .constant([
+            TimelineItem(id: UUID(), timeStamp: 1.023, itemLabel: "タックル"),
+            TimelineItem(id: UUID(), timeStamp: 1.023, itemLabel: "タックル")
+        ]), isEditMode: .constant(true), player: AVPlayer(url: URL(filePath: "/Users/isakakou/Desktop/dynamic2.mov")!)
+        )
+        
+        TaggedVideoTimelineView(timeline: .constant([
+            TimelineItem(id: UUID(), timeStamp: 1.023, itemLabel: "タックル"),
+            TimelineItem(id: UUID(), timeStamp: 1.023, itemLabel: "タックル")
+        ]), isEditMode: .constant(false), player: AVPlayer(url: URL(filePath: "/Users/isakakou/Desktop/dynamic2.mov")!)
+        )
 }
