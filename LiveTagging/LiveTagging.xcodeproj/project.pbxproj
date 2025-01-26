@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		782B24B92D463B2700EB8572 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 782B24B82D463B2700EB8572 /* GoogleService-Info.plist */; };
+		782B24BC2D463B7500EB8572 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 782B24BB2D463B7500EB8572 /* FirebaseAnalytics */; };
+		782B24C12D463D5400EB8572 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 782B24C02D463D5400EB8572 /* FirebaseCrashlytics */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		7860DDD32D32937D007C5C2B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		782B24B82D463B2700EB8572 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7860DDC02D32937B007C5C2B /* LiveTagging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiveTagging.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7860DDD22D32937D007C5C2B /* LiveTaggingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiveTaggingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7860DDDC2D32937D007C5C2B /* LiveTaggingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiveTaggingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,6 +72,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				782B24BC2D463B7500EB8572 /* FirebaseAnalytics in Frameworks */,
+				782B24C12D463D5400EB8572 /* FirebaseCrashlytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +97,7 @@
 		7860DDB72D32937B007C5C2B = {
 			isa = PBXGroup;
 			children = (
+				782B24B82D463B2700EB8572 /* GoogleService-Info.plist */,
 				7860DDC22D32937B007C5C2B /* LiveTagging */,
 				7860DDD52D32937D007C5C2B /* LiveTaggingTests */,
 				7860DDDF2D32937D007C5C2B /* LiveTaggingUITests */,
@@ -115,6 +125,7 @@
 				7860DDBC2D32937B007C5C2B /* Sources */,
 				7860DDBD2D32937B007C5C2B /* Frameworks */,
 				7860DDBE2D32937B007C5C2B /* Resources */,
+				782B24BF2D463C5900EB8572 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -125,6 +136,8 @@
 			);
 			name = LiveTagging;
 			packageProductDependencies = (
+				782B24BB2D463B7500EB8572 /* FirebaseAnalytics */,
+				782B24C02D463D5400EB8572 /* FirebaseCrashlytics */,
 			);
 			productName = LiveTagging;
 			productReference = 7860DDC02D32937B007C5C2B /* LiveTagging.app */;
@@ -209,6 +222,9 @@
 			);
 			mainGroup = 7860DDB72D32937B007C5C2B;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				782B24BA2D463B7500EB8572 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7860DDC12D32937B007C5C2B /* Products */;
 			projectDirPath = "";
@@ -226,6 +242,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				782B24B92D463B2700EB8572 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,6 +261,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		782B24BF2D463C5900EB8572 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7860DDBC2D32937B007C5C2B /* Sources */ = {
@@ -317,7 +359,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -411,9 +453,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"LiveTagging/Preview Content\"";
 				DEVELOPMENT_TEAM = WALU6ZJGAF;
+				ENABLE_DEBUG_DYLIB = NO;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LiveTagging/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Live Tagging";
@@ -449,7 +494,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LiveTagging/Preview Content\"";
 				DEVELOPMENT_TEAM = WALU6ZJGAF;
+				ENABLE_DEBUG_DYLIB = NO;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LiveTagging/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Live Tagging";
@@ -588,6 +635,29 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		782B24BA2D463B7500EB8572 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.7.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		782B24BB2D463B7500EB8572 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 782B24BA2D463B7500EB8572 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		782B24C02D463D5400EB8572 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseCrashlytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7860DDB82D32937B007C5C2B /* Project object */;
 }
