@@ -77,6 +77,8 @@ struct LiveTaggingView: View {
                         cameraController.stopRecording()
                         videoItem.timeline.sort { $0.timeStamp < $1.timeStamp }
                         saveVideoItem()
+                        // 録画終了時に初期化する
+                        videoItem = VideoItem(id: UUID(), videoTitle: NSLocalizedString("新規録画", comment: "新規録画"))
                     } else {
                         // 録画開始
                         cameraController.startRecording()
@@ -84,7 +86,6 @@ struct LiveTaggingView: View {
                 }) {
                     Image(systemName: cameraController.isRecording ? "stop.circle" : "record.circle")
                         .font(.largeTitle)
-                        .padding()
                         .foregroundColor(cameraController.isRecording ? Color.red : Color.white)
                 }
             }

@@ -23,12 +23,12 @@ struct LibraryTaggingView: View {
     init(tagSetList: [CustomTagSet]) {
         self._tagSetList = State(initialValue: tagSetList)
         self._selectedTagSet = State(initialValue: tagSetList.first ??
-                                    CustomTagSet(id: UUID(),
-                                               tagSetName: "デフォルトタグセット",
-                                               tags: [CustomTagItem(id: UUID(), itemLabel: "パス"),
-                                                    CustomTagItem(id: UUID(), itemLabel: "キャリー"),
-                                                    CustomTagItem(id: UUID(), itemLabel: "キック"),
-                                                    CustomTagItem(id: UUID(), itemLabel: "タックル")]))
+                                     CustomTagSet(id: UUID(),
+                                                  tagSetName: "デフォルトタグセット",
+                                                  tags: [CustomTagItem(id: UUID(), itemLabel: "パス"),
+                                                         CustomTagItem(id: UUID(), itemLabel: "キャリー"),
+                                                         CustomTagItem(id: UUID(), itemLabel: "キック"),
+                                                         CustomTagItem(id: UUID(), itemLabel: "タックル")]))
     }
     
     var body: some View {
@@ -81,9 +81,9 @@ struct LibraryTaggingView: View {
                 }
                 
                 // タグボタン
-                TagButtonView(tagSet: selectedTagSet, 
-                            timeline: $videoItem.timeline, 
-                            timeStamp: player?.currentTime().seconds ?? 0)
+                TagButtonView(tagSet: selectedTagSet,
+                              timeline: $videoItem.timeline,
+                              timeStamp: player?.currentTime().seconds ?? 0)
             }
         }
         .fullScreenCover(isPresented: $isPickerPresented) {
