@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+      "shouldTranslate" : false
+    },
     "Live Tagging" : {
       "localizations" : {
         "en" : {
@@ -61,6 +64,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "カメラの準備中..."
+          }
+        }
+      }
+    },
+    "カメラロールから" : {
+      "comment" : "カメラロールから",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From Photos"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カメラロールから"
           }
         }
       }
@@ -130,6 +150,22 @@
         }
       }
     },
+    "ビデオが選択されていません" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clip is not selected"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ビデオが選択されていません"
+          }
+        }
+      }
+    },
     "ビデオリスト" : {
       "localizations" : {
         "en" : {
@@ -174,6 +210,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "新規タグセット"
+          }
+        }
+      }
+    },
+    "新規タグ付け" : {
+      "comment" : "新規タグ付け",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Tagging"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新規タグ付け"
           }
         }
       }

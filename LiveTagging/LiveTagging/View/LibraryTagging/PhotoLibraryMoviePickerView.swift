@@ -7,14 +7,17 @@
 
 import SwiftUI
 import PhotosUI
+import Photos
+import UniformTypeIdentifiers
 
 struct PhotoLibraryMoviePickerView: UIViewControllerRepresentable {
 
     @Environment(\.dismiss) private var dismiss
     @Binding var videoURL: URL?
+    var onSelectAsset: ((String) -> Void)? // localIdentifierを親ビューに渡すためのコールバック
 
     func makeUIViewController(context: Context) -> PHPickerViewController {
-        var configuration = PHPickerConfiguration()
+        var configuration = PHPickerConfiguration(photoLibrary: .shared())
         configuration.filter = .videos
         configuration.preferredAssetRepresentationMode = .current
         let picker = PHPickerViewController(configuration: configuration)
@@ -37,28 +40,45 @@ struct PhotoLibraryMoviePickerView: UIViewControllerRepresentable {
         }
 
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-
-            parent.dismiss()
-
-            guard let provider = results.first?.itemProvider else {
+            print("写真選択完了: 結果数 \(results.count)")
+            
+            guard let result = results.first,
+                  let assetId = result.assetIdentifier else {
+                parent.dismiss()
                 return
             }
-
-            let typeIdentifier = UTType.movie.identifier
-
-            if provider.hasItemConformingToTypeIdentifier(typeIdentifier) {
-
-                provider.loadFileRepresentation(forTypeIdentifier: typeIdentifier) { url, error in
-                    if let error = error {
-                        print("error: \(error)")
-                        return
-                    }
-                    if let url = url {
-                        let fileName = "\(Int(Date().timeIntervalSince1970)).\(url.pathExtension)"
-                        let newUrl = URL(fileURLWithPath: NSTemporaryDirectory() + fileName)
-                        try? FileManager.default.copyItem(at: url, to: newUrl)
-                        self.parent.videoURL = newUrl
-                    }
+            
+            print("選択されたアセット: identifier=\(assetId)")
+            
+            // PHAssetを取得
+            let assets = PHAsset.fetchAssets(withLocalIdentifiers: [assetId], options: nil)
+            guard let asset = assets.firstObject else {
+                print("PHAsset取得失敗")
+                parent.dismiss()
+                return
+            }
+            
+            print("PHAsset取得成功: duration=\(asset.duration)")
+            
+            // AVAssetを取得
+            let options = PHVideoRequestOptions()
+            options.version = .current
+            options.deliveryMode = .highQualityFormat
+            options.isNetworkAccessAllowed = true
+            
+            PHImageManager.default().requestAVAsset(forVideo: asset, options: options) { [weak self] (avAsset, _, _) in
+                guard let self = self,
+                      let urlAsset = avAsset as? AVURLAsset else {
+                    print("AVAsset取得失敗")
+                    return
+                }
+                
+                print("URL取得成功: \(urlAsset.url)")
+                
+                DispatchQueue.main.async {
+                    self.parent.videoURL = urlAsset.url
+                    self.parent.onSelectAsset?(assetId)
+                    self.parent.dismiss()
                 }
             }
         }

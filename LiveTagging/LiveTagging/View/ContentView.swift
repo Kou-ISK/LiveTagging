@@ -23,10 +23,6 @@ struct ContentView: View {
                 
                 Grid {
                     GridRow {
-                        // TODO: いつか実装する
-                        //                        NavigationLink(destination: LibraryTaggingView(tagSet: testTagset)) {
-                        //                            CardView(icon: "folder.fill", title: "ライブラリから")
-                        //                        }
                         NavigationLink(destination: LiveTaggingView(tagSetList: tagSetList)) {
                             CardView(
                                 icon: "record.circle",
@@ -37,8 +33,20 @@ struct ContentView: View {
                                     endPoint: .bottom
                                 )
                             )
-                            
                         }
+                        NavigationLink(destination: LibraryTaggingView(tagSetList: tagSetList)) {
+                            CardView(
+                                icon: "folder.fill",
+                                title: NSLocalizedString("カメラロールから", comment: "カメラロールから"),
+                                gradient: LinearGradient(
+                                    colors: [Color.yellow, Color.orange],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                            )
+                        }
+                    }
+                    GridRow {
                         NavigationLink(destination: TaggedVideoListView(videoList: videoList)) {
                             CardView(
                                 icon: "books.vertical.circle",
@@ -50,8 +58,6 @@ struct ContentView: View {
                                 )
                             )
                         }
-                    }
-                    GridRow {
                         NavigationLink(destination: SettingView(tagSetList: tagSetList)) {
                             CardView(
                                 icon: "gear",
