@@ -139,5 +139,5 @@ struct LiveTaggingView: View {
 }
 
 #Preview {
-    LiveTaggingView(tagSetList: previewTagsetList)
+    LiveTaggingView(tagSetList: PreviewData().previewTagsetList)
 }

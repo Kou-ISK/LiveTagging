@@ -16,35 +16,35 @@ struct TaggedVideoListView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach($videoList, id: \.id) { $videoItem in
-                    if(isEditMode){
-                        HStack {
-                            TextField(videoItem.videoTitle, text: $videoItem.videoTitle).onSubmit {
-                                saveContext()
-                            }.padding(4)
-                            Spacer()
-                            ThumbnailView(videoURL: videoItem.videoURL)
-                        }
-                    }else{
-                        NavigationLink(destination: TaggedVideoView(videoItem: $videoItem)) {
+                List {
+                    ForEach($videoList, id: \.id) { $videoItem in
+                        if(isEditMode){
                             HStack {
-                                Text(videoItem.videoTitle)
+                                TextField(videoItem.videoTitle, text: $videoItem.videoTitle).onSubmit {
+                                    saveContext()
+                                }.padding(4)
                                 Spacer()
                                 ThumbnailView(videoURL: videoItem.videoURL)
                             }
+                        }else{
+                            NavigationLink(destination: TaggedVideoView(videoItem: $videoItem)) {
+                                HStack {
+                                    Text(videoItem.videoTitle)
+                                    Spacer()
+                                    ThumbnailView(videoURL: videoItem.videoURL)
+                                }
+                            }
                         }
                     }
+                    .onDelete(perform: deleteItems)
                 }
-                .onDelete(perform: deleteItems)
-            }.toolbar{
-                ToolbarItem(placement: .topBarTrailing, content: {
-                    Button("編集"){
-                        isEditMode.toggle()
-                    }
-                })
-            }
             .navigationTitle("ビデオリスト")
+        }.toolbar{
+            ToolbarItem(placement: .topBarTrailing, content: {
+                Button(isEditMode ? "完了" : "編集"){
+                    isEditMode.toggle()
+                }
+            })
         }
         .onAppear {
             updateVideoURLs()

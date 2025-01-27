@@ -21,28 +21,37 @@ struct TaggedVideoView: View {
         }
     
     var body: some View {
-        ZStack {
-            VideoPlayer(player: player)
-                .edgesIgnoringSafeArea(.all)
-            
-            VStack(alignment:.leading) {
-                HStack{
+        NavigationStack{
+            ZStack {
+                VideoPlayer(player: player)
+                    .edgesIgnoringSafeArea(.all)
+                
+                VStack(alignment:.leading) {
+                    HStack{
+                        Spacer()
+                        
+                        
+                    }
                     Spacer()
+                    HStack{
+                        // TODO: 左寄せにする
+                        TaggedVideoTimelineView(timeline: $videoItem.timeline, isEditMode: $isEditMode, player: player)
+                        Spacer()
+                    }
+                }
+            }.toolbar{
+                ToolbarItem(placement: .topBarTrailing){
                     // タイムライン共有リンク
                     ShareLink(item: generateTimelineText(from: videoItem.timeline)) {
                         Image(systemName: "square.and.arrow.up")
                             .foregroundColor(.blue)
                             .padding()
                     }
+                }
+                ToolbarItem(placement: .topBarTrailing){
                     Button("編集"){
                         isEditMode.toggle()
                     }
-                }
-                Spacer()
-                HStack{
-                    // TODO: 左寄せにする
-                    TaggedVideoTimelineView(timeline: $videoItem.timeline, isEditMode: $isEditMode, player: player)
-                    Spacer()
                 }
             }
         }

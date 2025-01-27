@@ -110,6 +110,6 @@ struct LibraryTaggingView: View {
     }
 }
 
-//#Preview {
-//    LibraryTaggingView()
-//}
+#Preview {
+    LibraryTaggingView(tagSetList: PreviewData().previewTagsetList)
+}
