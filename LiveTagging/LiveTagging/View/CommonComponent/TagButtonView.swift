@@ -19,11 +19,13 @@ struct TagButtonView: View {
             HStack{
                 ForEach(tagSet.tags, id:\.id){tag in
                     Button(action: {
-                        timeline.append(TimelineItem(id: UUID(), timeStamp: timeStamp, itemLabel: tag.itemLabel))
-                        do {
-                            try modelContext.save()
-                        }catch{
-                            print("保存エラー: \(error.localizedDescription)")
+                        withAnimation{
+                            timeline.append(TimelineItem(id: UUID(), timeStamp: timeStamp, itemLabel: tag.itemLabel))
+                            do {
+                                try modelContext.save()
+                            }catch{
+                                print("保存エラー: \(error.localizedDescription)")
+                            }
                         }
                     }, label: {
                         Text(tag.itemLabel)
