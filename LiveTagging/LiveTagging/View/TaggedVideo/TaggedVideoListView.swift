@@ -22,7 +22,7 @@ struct TaggedVideoListView: View {
                             HStack {
                                 TextField(videoItem.videoTitle, text: $videoItem.videoTitle).onSubmit {
                                     saveContext()
-                                }.padding(4)
+                                }.padding(4).border(.blue)
                                 Spacer()
                                 ThumbnailView(videoURL: videoItem.videoURL)
                             }
@@ -31,7 +31,7 @@ struct TaggedVideoListView: View {
                                 HStack {
                                     Text(videoItem.videoTitle)
                                     Spacer()
-                                    ThumbnailView(videoURL: videoItem.videoURL)
+                                    ThumbnailView(videoURL: videoItem.videoURL).padding(.trailing, 16)
                                 }
                             }
                         }
@@ -105,11 +105,9 @@ struct TaggedVideoListView: View {
     }
 }
 
-struct TaggedVideoListView_Previews: PreviewProvider {
-    static var previews: some View {
+#Preview {
         // プレビュー用のサンプルデータを作成
-        let sampleVideoItem1 = VideoItem(id: UUID(), videoTitle: "サンプルビデオ1", videoURL: URL(string: "https://www.example.com/sample1.mp4"))
+        let sampleVideoItem1 = VideoItem(id: UUID(), videoTitle: "サンプルビデオ1", videoURL: URL(filePath: "/Users/isakakou/Desktop/dynamic2.mov"))
         let sampleVideoItem2 = VideoItem(id: UUID(), videoTitle: "サンプルビデオ2", videoURL: URL(string: "https://www.example.com/sample2.mp4"))
-        return TaggedVideoListView(videoList: [sampleVideoItem1, sampleVideoItem2])
-    }
+     let view = TaggedVideoListView(videoList: [sampleVideoItem1, sampleVideoItem2])
 }
