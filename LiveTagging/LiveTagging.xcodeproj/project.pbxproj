@@ -10,6 +10,7 @@
 		782B24B92D463B2700EB8572 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 782B24B82D463B2700EB8572 /* GoogleService-Info.plist */; };
 		782B24BC2D463B7500EB8572 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 782B24BB2D463B7500EB8572 /* FirebaseAnalytics */; };
 		782B24C12D463D5400EB8572 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 782B24C02D463D5400EB8572 /* FirebaseCrashlytics */; };
+		78EA3DD52D4C9C6C0039F504 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 78EA3DD42D4C9C6C0039F504 /* InfoPlist.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +35,7 @@
 		7860DDC02D32937B007C5C2B /* LiveTagging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiveTagging.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7860DDD22D32937D007C5C2B /* LiveTaggingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiveTaggingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7860DDDC2D32937D007C5C2B /* LiveTaggingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiveTaggingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		78EA3DD42D4C9C6C0039F504 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -97,6 +99,7 @@
 		7860DDB72D32937B007C5C2B = {
 			isa = PBXGroup;
 			children = (
+				78EA3DD42D4C9C6C0039F504 /* InfoPlist.xcstrings */,
 				782B24B82D463B2700EB8572 /* GoogleService-Info.plist */,
 				7860DDC22D32937B007C5C2B /* LiveTagging */,
 				7860DDD52D32937D007C5C2B /* LiveTaggingTests */,
@@ -242,6 +245,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78EA3DD52D4C9C6C0039F504 /* InfoPlist.xcstrings in Resources */,
 				782B24B92D463B2700EB8572 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
