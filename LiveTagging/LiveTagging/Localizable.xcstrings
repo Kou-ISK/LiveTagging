@@ -21,7 +21,20 @@
       }
     },
     "NO IMAGE" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NO IMAGE"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NO IMAGE"
+          }
+        }
+      }
     },
     "いいえ" : {
       "localizations" : {
@@ -84,23 +97,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "カメラロールから"
-          }
-        }
-      }
-    },
-    "サムネイルなし" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No Thumbnail"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "サムネイルなし"
           }
         }
       }
@@ -187,7 +183,20 @@
       }
     },
     "完了" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完了"
+          }
+        }
+      }
     },
     "新規タグ" : {
       "localizations" : {
