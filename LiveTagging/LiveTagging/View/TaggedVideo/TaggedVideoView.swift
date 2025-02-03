@@ -49,7 +49,7 @@ struct TaggedVideoView: View {
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing){
-                    Button("編集"){
+                    Button(isEditMode ? "完了": "編集"){
                         isEditMode.toggle()
                     }
                 }

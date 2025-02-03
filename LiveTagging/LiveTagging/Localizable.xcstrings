@@ -20,6 +20,9 @@
         }
       }
     },
+    "NO IMAGE" : {
+
+    },
     "いいえ" : {
       "localizations" : {
         "en" : {
@@ -86,6 +89,7 @@
       }
     },
     "サムネイルなし" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -181,6 +185,9 @@
           }
         }
       }
+    },
+    "完了" : {
+
     },
     "新規タグ" : {
       "localizations" : {
